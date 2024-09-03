@@ -1,0 +1,325 @@
+
+
+
+
+
+
+ fg_reg_mask.sum():    0
+ fg_iou_mask.sum():    0
+ loss_reg:         0.0
+ loss_corner:      nan
+ loss_point_cls:      0.01606765016913414
+ loss_box_cls:      nan
+ loss_joint_cls:      nan
+
+
+
+
+
+
+ fg_reg_mask.sum():    0
+ fg_iou_mask.sum():    0
+ loss_reg:         0.0
+ loss_corner:      nan
+ loss_point_cls:      0.8139403462409973
+ loss_box_cls:      nan
+ loss_joint_cls:      nan
+
+
+
+
+
+
+ fg_reg_mask.sum():    1
+ fg_iou_mask.sum():    1
+ loss_reg:         2.608074188232422
+ loss_corner:      0.10632067173719406
+ loss_point_cls:      0.018057752400636673
+ loss_box_cls:      0.8203953504562378
+ loss_joint_cls:      0.34017422795295715
+
+
+
+
+
+
+ fg_reg_mask.sum():    0
+ fg_iou_mask.sum():    0
+ loss_reg:         0.0
+ loss_corner:      nan
+ loss_point_cls:      0.024446848779916763
+ loss_box_cls:      nan
+ loss_joint_cls:      nan
+
+
+
+
+
+
+ fg_reg_mask.sum():    1
+ fg_iou_mask.sum():    1
+ loss_reg:         2.608074188232422
+ loss_corner:      0.10632067173719406
+ loss_point_cls:      0.018057752400636673
+ loss_box_cls:      0.8203952312469482
+ loss_joint_cls:      0.34017419815063477
+
+
+
+
+
+
+ fg_reg_mask.sum():    1
+ fg_iou_mask.sum():    1
+ loss_reg:         2.608074188232422
+ loss_corner:      0.10632067173719406
+ loss_point_cls:      0.018057752400636673
+ loss_box_cls:      0.8203952312469482
+ loss_joint_cls:      0.34017419815063477
+
+
+
+
+
+
+ fg_reg_mask.sum():    1
+ fg_iou_mask.sum():    1
+ loss_reg:         2.0172502994537354
+ loss_corner:      0.3025689423084259
+ loss_point_cls:      0.7585945129394531
+ loss_box_cls:      0.7075605392456055
+ loss_joint_cls:      0.7502540349960327
+
+
+
+
+
+
+ fg_reg_mask.sum():    1
+ fg_iou_mask.sum():    1
+ loss_reg:         2.0172502994537354
+ loss_corner:      0.3025689423084259
+ loss_point_cls:      0.7585945129394531
+ loss_box_cls:      0.7075605392456055
+ loss_joint_cls:      0.7502540349960327
+
+
+
+
+
+
+ fg_reg_mask.sum():    1
+ fg_iou_mask.sum():    1
+ loss_reg:         2.0172502994537354
+ loss_corner:      0.3025689423084259
+ loss_point_cls:      0.7585945129394531
+ loss_box_cls:      0.7075605392456055
+ loss_joint_cls:      0.7502540349960327
+
+
+
+
+
+
+ fg_reg_mask.sum():    1
+ fg_iou_mask.sum():    1
+ loss_reg:         2.0172502994537354
+ loss_corner:      0.3025689423084259
+ loss_point_cls:      0.7585945129394531
+ loss_box_cls:      0.7075605392456055
+ loss_joint_cls:      0.7502540349960327
+
+
+
+
+
+
+ fg_reg_mask.sum():    1
+ fg_iou_mask.sum():    1
+ loss_reg:         2.0172502994537354
+ loss_corner:      0.3025689423084259
+ loss_point_cls:      0.7585945129394531
+ loss_box_cls:      0.7075605392456055
+ loss_joint_cls:      0.7502540349960327
+
+
+
+
+
+
+ fg_reg_mask.sum():    1
+ fg_iou_mask.sum():    1
+ loss_reg:         2.0172502994537354
+ loss_corner:      0.3025689423084259
+ loss_point_cls:      0.7585945129394531
+ loss_box_cls:      0.7075605392456055
+ loss_joint_cls:      0.7502540349960327
+
+
+
+
+
+
+ fg_reg_mask.sum():    2
+ fg_iou_mask.sum():    0
+ loss_reg:         0.8218581676483154
+ loss_corner:      0.631905198097229
+ loss_point_cls:      0.7716779112815857
+ loss_box_cls:      nan
+ loss_joint_cls:      nan
+
+
+
+
+
+
+ fg_reg_mask.sum():    2
+ fg_iou_mask.sum():    1
+ loss_reg:         1.246265172958374
+ loss_corner:      0.3966330289840698
+ loss_point_cls:      0.7622643113136292
+ loss_box_cls:      0.693196713924408
+ loss_joint_cls:      0.7510319948196411
+
+
+
+
+
+
+ fg_reg_mask.sum():    1
+ fg_iou_mask.sum():    1
+ loss_reg:         2.0172502994537354
+ loss_corner:      0.3025689423084259
+ loss_point_cls:      0.7585945129394531
+ loss_box_cls:      0.7075605392456055
+ loss_joint_cls:      0.7502540349960327
+
+
+
+
+
+
+ fg_reg_mask.sum():    1
+ fg_iou_mask.sum():    1
+ loss_reg:         2.0172502994537354
+ loss_corner:      0.3025689423084259
+ loss_point_cls:      0.7585945129394531
+ loss_box_cls:      0.7075605392456055
+ loss_joint_cls:      0.7502540349960327
+
+
+
+
+
+
+ fg_reg_mask.sum():    1
+ fg_iou_mask.sum():    1
+ loss_reg:         2.0172502994537354
+ loss_corner:      0.3025689423084259
+ loss_point_cls:      0.7585945129394531
+ loss_box_cls:      0.7075605392456055
+ loss_joint_cls:      0.7502540349960327
+
+
+
+
+
+
+ fg_reg_mask.sum():    0
+ fg_iou_mask.sum():    0
+ loss_reg:         0.0
+ loss_corner:      nan
+ loss_point_cls:      0.026683282107114792
+ loss_box_cls:      nan
+ loss_joint_cls:      nan
+
+
+
+
+
+
+ fg_reg_mask.sum():    0
+ fg_iou_mask.sum():    0
+ loss_reg:         0.0
+ loss_corner:      nan
+ loss_point_cls:      0.03498299419879913
+ loss_box_cls:      nan
+ loss_joint_cls:      nan
+
+
+
+
+
+
+ fg_reg_mask.sum():    23
+ fg_iou_mask.sum():    10
+ loss_reg:         0.23191986978054047
+ loss_corner:      0.1976780742406845
+ loss_point_cls:      0.09891276806592941
+ loss_box_cls:      1.128257393836975
+ loss_joint_cls:      0.7375077605247498
+
+
+
+
+
+
+ fg_reg_mask.sum():    6
+ fg_iou_mask.sum():    2
+ loss_reg:         0.29897835850715637
+ loss_corner:      0.3189091384410858
+ loss_point_cls:      0.08852441608905792
+ loss_box_cls:      1.1725287437438965
+ loss_joint_cls:      0.6905606985092163
+
+
+
+
+
+
+ fg_reg_mask.sum():    1
+ fg_iou_mask.sum():    0
+ loss_reg:         0.048779040575027466
+ loss_corner:      0.024794142693281174
+ loss_point_cls:      0.0736098662018776
+ loss_box_cls:      nan
+ loss_joint_cls:      nan
+
+
+
+
+
+
+ fg_reg_mask.sum():    7
+ fg_iou_mask.sum():    1
+ loss_reg:         0.14131198823451996
+ loss_corner:      0.4525578022003174
+ loss_point_cls:      0.08024009317159653
+ loss_box_cls:      1.6419970989227295
+ loss_joint_cls:      0.7391738295555115
+
+
+
+
+
+
+ fg_reg_mask.sum():    2
+ fg_iou_mask.sum():    0
+ loss_reg:         0.1300203800201416
+ loss_corner:      0.14830315113067627
+ loss_point_cls:      0.08052747696638107
+ loss_box_cls:      nan
+ loss_joint_cls:      nan
+
+
+
+
+
+
+ fg_reg_mask.sum():    62
+ fg_iou_mask.sum():    23
+ loss_reg:         0.10834852606058121
+ loss_corner:      0.06649375706911087
+ loss_point_cls:      0.17347903549671173
+ loss_box_cls:      0.3964167535305023
+ loss_joint_cls:      0.6279724836349487
