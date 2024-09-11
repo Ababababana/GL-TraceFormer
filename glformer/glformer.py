@@ -519,6 +519,8 @@ class glFormer(nn.Module):
                         targets[bs_idx]["gt_boxes"][:, [0, 1, 2, 3, 4, 5, -1]],
                     )
                     max_iou = ious.max(-1)[0]
+
+                    # only append those boxes which weren't been augmented too much
                     if max_iou.mean() < 0.5:
                         count += 1
                         aug_list_batch.append(aug_box3d[:, None, :])
@@ -528,7 +530,7 @@ class glFormer(nn.Module):
 
                 if count == 2:
                     break
-
+            # if augments not enough, pad origin bboxes
             if count != 2:
                 for _ in range(2 - count):
                     aug_list_batch.append(bbox[:, None, :7])
@@ -736,8 +738,9 @@ class glFormer(nn.Module):
             # self.get_pred_motion gens the future 10 frames traj(compared to the t-1 frame,
             # but pred_hypo only takes the first future frame, which equals to the current frame 
             pred_hypo = self.get_pred_motion(traj, pred_vel)[:, 0, :, 0]
-
-        traj = traj[:, 1:]  # rm the first t-1 pred boxes
+     
+        # use 10 history frames to pred, but use 9 history + current detection to feed ViT and GLT
+        traj = traj[:, :-1]  # rm the first t-1 pred boxes
         pred_label_list = pred_labels.reshape(
             self.batch_size, self.traj_length + 1, -1, 1
         )
@@ -793,7 +796,7 @@ class glFormer(nn.Module):
         global_candidates = torch.cat([transfered_det, group_det_boxes.unsqueeze(1)], 3)
 
   
-        # traj is actually the t-2 ~ t-10 history traj
+        # traj is  t-1 ~ t-9 history traj
         traj_repeat = traj.unsqueeze(3).repeat(1, 1, 1, global_candidates.shape[3], 1)
         global_trajectory_hypothses = torch.cat([global_candidates, traj_repeat], 1)
 
@@ -885,8 +888,8 @@ class glFormer(nn.Module):
         heading_label[opposite_flag] = (heading_label[opposite_flag] + np.pi) % (
             2 * np.pi
         )  # (0 ~ pi/2, 3pi/2 ~ 2pi)
-        flag = heading_label > np.pi
-        heading_label[flag] = heading_label[flag] - np.pi * 2  # (-pi/2, pi/2)
+        #flag = heading_label > np.pi
+        #heading_label[flag] = heading_label[flag] - np.pi * 2  # (-pi/2, pi/2)
         heading_label = torch.clamp(heading_label, min=-np.pi / 2, max=np.pi / 2)
 
         gt_of_rois[:, :, 6] = heading_label
@@ -997,10 +1000,12 @@ class glFormer(nn.Module):
         f.write('\n'*5)
         f.write(f" fg_reg_mask.sum:  {fg_reg_mask.sum()} ")
         f.write(f" fg_iou_mask.sum:  {fg_iou_mask.sum()} ")
+        # aux for ViT
         loss_reg = self.reg_loss_func(point_reg, reg_targets)[:, fg_reg_mask]
         loss_reg = loss_reg.sum() / max(fg_reg_mask.sum(), 1)
         f.write(f" loss_reg:   {loss_reg}"+'\n')
         #import pdb;pdb.set_trace()
+        # auxillary loss for ViT
         loss_corner = get_corner_loss(
             point_reg.reshape(-1, 7),
             rois.repeat(self.num_encoder_layers, 1),
@@ -1013,6 +1018,7 @@ class glFormer(nn.Module):
         )
         f.write(f" loss_point_cls:   {loss_point_cls}"+'\n')
 
+        # ious_targets has been repeated for num_encoder_layers times for aux loss, but for loss_box_cls only use the deepest part
         index = ious_targets.shape[0] // self.num_encoder_layers
         ious_targets = ious_targets[:index].reshape(
             self.batch_size * self.num_track, self.num_hypo_train
@@ -1024,6 +1030,7 @@ class glFormer(nn.Module):
 
         fg_mask_repeat = fg_iou_mask.repeat(self.num_encoder_layers)
         group_ious_repeat = ious_targets.repeat(self.num_encoder_layers, 1)
+        # auxillary loss for GLT
         loss_joint_cls = F.binary_cross_entropy(
             joint_cls.sigmoid()[fg_mask_repeat], group_ious_repeat[fg_mask_repeat]
         )
@@ -1324,35 +1331,40 @@ class glFormer(nn.Module):
         return trajectory_hypotheses, global_candidates, vels_hypotheses
 
     def generate_refined_boxes(self, rois, box_preds=None):
+        #import pdb;pdb.set_trace()
         code_size = rois.shape[-1]
         num_rois = rois.shape[0]
         roi_ry = rois[:, :, 6].view(-1)
         roi_xyz = rois[:, :, 0:3].view(-1, 3)
         local_rois = rois.clone().detach()
-        local_rois[:, :, 0:3] = 0
+        #local_rois[:, :, 0:3] = 0
         batch_box_preds = decode_torch(box_preds, local_rois).view(-1, code_size)
 
         batch_box_preds = rotate_points_along_z(
-            batch_box_preds.unsqueeze(dim=1), roi_ry
+            batch_box_preds.unsqueeze(dim=1), batch_box_preds[...,6]-roi_ry
         ).squeeze(dim=1)
 
-        batch_box_preds[:, 0:3] += roi_xyz
+        #batch_box_preds[:, 0:3] += roi_xyz
         batch_box_preds = batch_box_preds.view(num_rois, -1, code_size)
         batch_box_preds = torch.cat([batch_box_preds, rois[:, :, 7:]], -1)
         return batch_box_preds
 
     def get_keep_mask(self, fg_confidence, asso_mask):
+        import pdb;pdb.set_trace()
         keep_mask = torch.zeros_like(fg_confidence[:, 0]).bool()
         keep_mask[asso_mask] = True
         track_score_mask = torch.zeros_like(keep_mask)
+        fg_max = fg_confidence.max(-1)[0]
+
+        # if some traj can't match with detection boxes by IOU in get_det_candi, use here to judge if the fg_conf of its chosen hypo are good enough to be kept
         track_score_mask[self.car_mask] = (
-            fg_confidence[:, 0].reshape(-1)[self.car_mask] > self.keep_thresh_car
+            fg_max.reshape(-1)[self.car_mask] > self.keep_thresh_car
         )
         track_score_mask[self.ped_mask] = (
-            fg_confidence[:, 0].reshape(-1)[self.ped_mask] > self.keep_thresh_ped
+            fg_max.reshape(-1)[self.ped_mask] > self.keep_thresh_ped
         )
         track_score_mask[self.cyc_mask] = (
-            fg_confidence[:, 0].reshape(-1)[self.cyc_mask] > self.keep_thresh_cyc
+            fg_max.reshape(-1)[self.cyc_mask] > self.keep_thresh_cyc
         )
         keep_mask[~asso_mask] = track_score_mask[~asso_mask]
         return keep_mask

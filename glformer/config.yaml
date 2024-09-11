@@ -3,7 +3,7 @@ detection:
     source:
         local5f:
             root: ${oc.env:EFG_PATH}/datasets/waymo
-            train: /boxes_3d/gt_anno_aligned_last_ver.pkl
+            train: /boxes_3d/infos_val_05sweeps_sampled.pkl
             val: /boxes_3d/infos_val_05sweeps_sampled.pkl
 
 task: train
@@ -18,7 +18,7 @@ dataset:
     traj_length: 10
     load_interval: 1
     classes: ["VEHICLE","PEDESTRIAN", "CYCLIST"]
-    train_boxes_path:  ${oc.env:EFG_PATH}/datasets/waymo/boxes_3d/mppnet_boxes_train_fixed.pkl
+    train_boxes_path:  ${oc.env:EFG_PATH}/datasets/waymo/boxes_3d/mppnet_boxes_val.pkl
     val_boxes_path:  ${oc.env:EFG_PATH}/datasets/waymo/boxes_3d/mppnet_boxes_val.pkl
 
     #train_boxes2d_path:  ${oc.env:EFG_PATH}/datasets/waymo/boxes_2d/mppnet_boxes2d_train_fixed.pkl

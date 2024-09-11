@@ -27,6 +27,7 @@ class PubTracker(object):
         self.tracks = tracks
 
     def step_centertrack(self, results, time_lag, frame_id):
+        ## self.tracks is the instance of the last frame, including all the active num_tracks objects in the last frame
         if len(results) == 0:
             self.tracks = []
             return []
@@ -50,6 +51,7 @@ class PubTracker(object):
         N = len(results)
         M = len(self.tracks)
         # N X 2
+        ## cal the detection objects' position in the last fram through minus vel, and use center_L2_dist to match
         if "tracking" in results[0]:
             dets = np.array(
                 [det["ct"] + det["tracking"].astype(np.float32) for det in results],
@@ -95,9 +97,9 @@ class PubTracker(object):
 
         ret = []
         for m in matches:
-            track = results[m[0]]
+            track = results[m[0]]   # choose the one matched detection
             track["tracking_id"] = self.tracks[m[1]]["tracking_id"]
-            track["age"] = 1
+            track["age"] = 1   # matched track's "age" reset to 1
             track["active"] = self.tracks[m[1]]["active"] + 1
             ret.append(track)
         return ret

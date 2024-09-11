@@ -107,7 +107,7 @@ class CustomWDDataset(WaymoDetectionDataset):
         return ordered_bboxes, valid_mask.astype(bool)
 
     def __getitem__(self, idx):
-        import pdb;pdb.set_trace()
+        #import pdb;pdb.set_trace()
         #idx=0
         if not hasattr(self, "boxes_dicts"):
             self.boxes_dicts = self.load_boxes()
